@@ -9,7 +9,6 @@ public final class RealtorRestController {
   @Inject
   private final RealtorRepository realtorRepository = new RealtorRepository();
   @GET
-  @Path("/")
   public Response getAll() {
     return Response.ok(realtorRepository.findAll().list()).build();
   }

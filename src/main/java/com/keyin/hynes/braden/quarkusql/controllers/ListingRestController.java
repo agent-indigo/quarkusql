@@ -9,7 +9,6 @@ public final class ListingRestController {
   @Inject
   private final ListingRepository listingRestRepository = new ListingRepository();
   @GET
-  @Path("/")
   public Response getAll() {
     return Response.ok(listingRestRepository.findAll().list()).build();
   }
