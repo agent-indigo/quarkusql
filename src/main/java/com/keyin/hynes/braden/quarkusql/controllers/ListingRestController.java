@@ -1,4 +1,5 @@
 package com.keyin.hynes.braden.quarkusql.controllers;
+import java.util.List;
 import java.util.UUID;
 import com.keyin.hynes.braden.quarkusql.entities.Listing;
 import com.keyin.hynes.braden.quarkusql.repositories.ListingRepository;
@@ -10,35 +11,32 @@ import jakarta.ws.rs.PATCH;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.UriInfo;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 @Path("/listings")
+@Produces(MediaType.APPLICATION_JSON)
 public final class ListingRestController {
   @Inject
   private final ListingRepository listingRepository = new ListingRepository();
   private Listing target;
   @GET
-  public Response getAll() {
-    return Response.ok(listingRepository.findAll().list()).build();
+  public List<Listing> getAll() {
+    return listingRepository.findAll().list();
   }
   @GET
   @Path("/{id}")
-  public Response getOne(@PathParam("id") final UUID id) {
-    return Response.ok(listingRepository.findById(id)).build();
+  public Listing getOne(@PathParam("id") final UUID id) {
+    return listingRepository.findById(id);
   }
   @POST
-  public Response add(
-    Listing listing,
-    @Context UriInfo uriInfo
-  ) {
+  public Listing add(Listing listing) {
     listingRepository.persist(listing);
-    return Response.created(uriInfo.getAbsolutePathBuilder().path(listing.getId().toString()).build(listing)).build();
+    return listing;
   }
   @PATCH
   @Path("/{id}")
   @Transactional
-  public Response edit (
+  public Listing edit (
     @PathParam("id") final UUID id,
     final Listing changes
   ) {
@@ -64,11 +62,11 @@ public final class ListingRestController {
     if (changes.getInterior_photo_6() != null) target.setInterior_photo_6(changes.getInterior_photo_6());
     if (changes.getIs_published() != null) target.setIs_published(changes.getIs_published());
     if (changes.getRealtor() != null) target.setRealtor(changes.getRealtor());
-    return Response.ok(target).build();
+    return target;
   }
   @DELETE
   @Path("/{id}")
-  public Response delete(@PathParam("id") final UUID id) {
-    return listingRepository.deleteById(id) ? Response.noContent().build() : Response.serverError().build();
+  public Boolean delete(@PathParam("id") final UUID id) {
+    return listingRepository.deleteById(id);
   }
 }

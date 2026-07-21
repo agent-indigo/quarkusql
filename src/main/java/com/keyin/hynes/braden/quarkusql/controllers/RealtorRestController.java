@@ -1,4 +1,5 @@
 package com.keyin.hynes.braden.quarkusql.controllers;
+import java.util.List;
 import java.util.UUID;
 import com.keyin.hynes.braden.quarkusql.entities.Realtor;
 import com.keyin.hynes.braden.quarkusql.repositories.RealtorRepository;
@@ -10,35 +11,37 @@ import jakarta.ws.rs.PATCH;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.UriInfo;
 @Path("/realtors")
+@Produces(MediaType.APPLICATION_JSON)
 public final class RealtorRestController {
   @Inject
   private final RealtorRepository realtorRepository = new RealtorRepository();
   private Realtor target;
   @GET
-  public Response getAll() {
-    return Response.ok(realtorRepository.findAll().list()).build();
+  public List<Realtor> getAll() {
+    return realtorRepository.findAll().list();
   }
   @GET
   @Path("/{id}")
-  public Response getOne(@PathParam("id") final UUID id) {
-    return Response.ok(realtorRepository.findById(id)).build();
+  public Realtor getOne(@PathParam("id") final UUID id) {
+    return realtorRepository.findById(id);
   }
   @POST
-  public Response add(
+  public Realtor add(
     Realtor realtor,
     @Context UriInfo uriInfo
   ) {
     realtorRepository.persist(realtor);
-    return Response.created(uriInfo.getAbsolutePathBuilder().path(realtor.getId().toString()).build(realtor)).build();
+    return realtor;
   }
   @PATCH
   @Path("/{id}")
   @Transactional
-  public Response edit(
+  public Realtor edit(
     @PathParam("id") final UUID id,
     final Realtor changes
   ) {
@@ -50,11 +53,11 @@ public final class RealtorRestController {
     if (changes.getEmail_address() != null) target.setEmail_address(changes.getEmail_address());
     if (changes.getPhone_number() != null) target.setPhone_number(changes.getPhone_number());
     if (changes.getIs_mvp() != null) target.setIs_mvp(changes.getIs_mvp());
-    return Response.ok(target).build();
+    return target;
   }
   @DELETE
   @Path("/{id}")
-  public Response delete(@PathParam("id") final UUID id) {
-    return realtorRepository.deleteById(id) ? Response.noContent().build() : Response.serverError().build();
+  public Boolean delete(@PathParam("id") final UUID id) {
+    return realtorRepository.deleteById(id);
   }
 }
