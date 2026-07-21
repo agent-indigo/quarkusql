@@ -1,5 +1,6 @@
 package com.keyin.hynes.braden.quarkusql.entities;
 import com.keyin.hynes.braden.quarkusql.abstracts.EntityBase;
+import jakarta.annotation.Nonnull;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -11,11 +12,17 @@ import lombok.ToString;
 @Table(name = "realtors")
 @ToString(callSuper = true)
 public final class Realtor extends EntityBase {
+  @Nonnull
   private String first_name;
+  @Nonnull
   private String last_name;
+  @Nonnull
   private String photo;
   private String description;
+  @Nonnull
   private String email_address;
+  @Nonnull
   private String phone_number;
+  @Nonnull
   private Boolean is_mvp;
 }
