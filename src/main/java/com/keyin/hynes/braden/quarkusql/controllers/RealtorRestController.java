@@ -2,6 +2,7 @@ package com.keyin.hynes.braden.quarkusql.controllers;
 import java.util.List;
 import java.util.UUID;
 import com.keyin.hynes.braden.quarkusql.entities.Realtor;
+import com.keyin.hynes.braden.quarkusql.interfaces.RestCrud;
 import com.keyin.hynes.braden.quarkusql.repositories.RealtorRepository;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -12,12 +13,10 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.UriInfo;
 @Path("/realtors")
 @Produces(MediaType.APPLICATION_JSON)
-public final class RealtorRestController {
+public final class RealtorRestController implements RestCrud<Realtor, UUID> {
   @Inject
   private final RealtorRepository realtorRepository = new RealtorRepository();
   private Realtor target;
@@ -31,12 +30,9 @@ public final class RealtorRestController {
     return realtorRepository.findById(id);
   }
   @POST
-  public Realtor add(
-    Realtor realtor,
-    @Context UriInfo uriInfo
-  ) {
-    realtorRepository.persist(realtor);
-    return realtor;
+  public Realtor add(Realtor post) {
+    realtorRepository.persist(post);
+    return post;
   }
   @PATCH
   @Path("/{id}")

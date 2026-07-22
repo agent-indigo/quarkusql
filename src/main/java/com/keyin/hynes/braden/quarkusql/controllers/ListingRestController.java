@@ -2,6 +2,7 @@ package com.keyin.hynes.braden.quarkusql.controllers;
 import java.util.List;
 import java.util.UUID;
 import com.keyin.hynes.braden.quarkusql.entities.Listing;
+import com.keyin.hynes.braden.quarkusql.interfaces.RestCrud;
 import com.keyin.hynes.braden.quarkusql.repositories.ListingRepository;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -15,7 +16,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 @Path("/listings")
 @Produces(MediaType.APPLICATION_JSON)
-public final class ListingRestController {
+public final class ListingRestController implements RestCrud<Listing, UUID> {
   @Inject
   private final ListingRepository listingRepository = new ListingRepository();
   private Listing target;
@@ -29,9 +30,9 @@ public final class ListingRestController {
     return listingRepository.findById(id);
   }
   @POST
-  public Listing add(Listing listing) {
-    listingRepository.persist(listing);
-    return listing;
+  public Listing add(Listing post) {
+    listingRepository.persist(post);
+    return post;
   }
   @PATCH
   @Path("/{id}")
