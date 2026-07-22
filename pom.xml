@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.keyin.hynes.braden</groupId>
     <artifactId>quarkusql</artifactId>
-    <version>1.0.0</version>
+    <version>0.0.1</version>
     <packaging>quarkus</packaging>
     <properties>
         <compiler-plugin.version>3.15.0</compiler-plugin.version>
