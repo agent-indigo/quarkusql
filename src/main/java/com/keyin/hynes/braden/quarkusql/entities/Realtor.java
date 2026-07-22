@@ -3,12 +3,16 @@ import com.keyin.hynes.braden.quarkusql.abstracts.EntityBase;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
+@AllArgsConstructor
 @Data
 @Entity
 @EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 @Table(name = "realtors")
 @ToString(callSuper = true)
 public final class Realtor extends EntityBase {

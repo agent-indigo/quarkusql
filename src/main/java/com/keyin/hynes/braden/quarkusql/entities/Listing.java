@@ -5,12 +5,16 @@ import jakarta.annotation.Nullable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
+@AllArgsConstructor
 @Data
 @Entity
 @EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 @Table(name = "listings")
 @ToString(callSuper = true)
 public final class Listing extends EntityBase {
