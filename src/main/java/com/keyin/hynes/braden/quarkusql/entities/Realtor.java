@@ -18,11 +18,12 @@ public final class Realtor extends EntityBase {
   private String last_name;
   @Nonnull
   private String photo;
+  @Nonnull
   private String description;
   @Nonnull
   private String email_address;
   @Nonnull
   private String phone_number;
   @Nonnull
-  private Boolean is_mvp;
+  private Boolean is_mvp = false;
 }

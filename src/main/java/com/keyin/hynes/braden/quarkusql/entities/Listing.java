@@ -1,6 +1,7 @@
 package com.keyin.hynes.braden.quarkusql.entities;
 import com.keyin.hynes.braden.quarkusql.abstracts.EntityBase;
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -23,6 +24,7 @@ public final class Listing extends EntityBase {
   private String state;
   @Nonnull
   private String zipcode;
+  @Nonnull
   private String description;
   @Nonnull
   private Float price;
@@ -38,15 +40,21 @@ public final class Listing extends EntityBase {
   private Float lot_size;
   @Nonnull
   private String exterior_photo;
+  @Nonnull
   private String interior_photo_1;
+  @Nonnull
   private String interior_photo_2;
+  @Nonnull
   private String interior_photo_3;
+  @Nonnull
   private String interior_photo_4;
+  @Nullable
   private String interior_photo_5;
+  @Nullable
   private String interior_photo_6;
   @Nonnull
-  private Boolean is_published;
+  private Boolean is_published = true;
   @ManyToOne
-  @Nonnull
+  @Nullable
   private Realtor realtor;
 }
