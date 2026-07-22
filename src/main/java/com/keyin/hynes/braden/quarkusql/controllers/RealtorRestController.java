@@ -21,19 +21,23 @@ public final class RealtorRestController implements RestCrud<Realtor, UUID> {
   private final RealtorRepository realtorRepository = new RealtorRepository();
   private Realtor target;
   @GET
+  @Override
   public List<Realtor> getAll() {
     return realtorRepository.findAll().list();
   }
   @GET
+  @Override
   @Path("/{id}")
   public Realtor getOne(@PathParam("id") final UUID id) {
     return realtorRepository.findById(id);
   }
+  @Override
   @POST
   public Realtor add(Realtor post) {
     realtorRepository.persist(post);
     return post;
   }
+  @Override
   @PATCH
   @Path("/{id}")
   @Transactional
@@ -52,6 +56,7 @@ public final class RealtorRestController implements RestCrud<Realtor, UUID> {
     return target;
   }
   @DELETE
+  @Override
   @Path("/{id}")
   public Boolean delete(@PathParam("id") final UUID id) {
     return realtorRepository.deleteById(id);

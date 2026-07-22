@@ -21,19 +21,23 @@ public final class ListingRestController implements RestCrud<Listing, UUID> {
   private final ListingRepository listingRepository = new ListingRepository();
   private Listing target;
   @GET
+  @Override
   public List<Listing> getAll() {
     return listingRepository.findAll().list();
   }
   @GET
+  @Override
   @Path("/{id}")
   public Listing getOne(@PathParam("id") final UUID id) {
     return listingRepository.findById(id);
   }
+  @Override
   @POST
   public Listing add(Listing post) {
     listingRepository.persist(post);
     return post;
   }
+  @Override
   @PATCH
   @Path("/{id}")
   @Transactional
@@ -66,6 +70,7 @@ public final class ListingRestController implements RestCrud<Listing, UUID> {
     return target;
   }
   @DELETE
+  @Override
   @Path("/{id}")
   public Boolean delete(@PathParam("id") final UUID id) {
     return listingRepository.deleteById(id);
